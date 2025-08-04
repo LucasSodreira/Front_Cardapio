@@ -11,9 +11,14 @@ Este é o frontend de um sistema de cardápio digital que permite visualizar e g
 - 📱 **Interface Responsiva**: Design adaptado para desktop e mobile
 - 🍕 **Visualização de Cardápio**: Cards elegantes com imagens, títulos e preços
 - ➕ **Adicionar Itens**: Modal moderno para criar novos itens do cardápio
+- ✏️ **Editar Itens**: Funcionalidade completa de edição com modal dedicado
+- 🗑️ **Excluir Itens**: Remoção com modal de confirmação para segurança
+- 💰 **Gestão de Preços**: Conversão automática centavos/reais conforme API
 - 🎨 **Design Moderno**: Interface com gradientes, animações e sombras
-- 🔔 **Notificações**: Feedback visual com toast notifications
+- 🔔 **Notificações**: Feedback visual com toast notifications para todas as ações
 - ⚡ **Performance**: Cache inteligente de dados com React Query
+- 🛡️ **Tratamento de Erros**: Estados de loading, erro e validação de formulários
+- 📱 **CRUD Completo**: Create, Read, Update e Delete totalmente funcionais
 
 ## 🚀 Tecnologias Utilizadas
 
@@ -41,19 +46,27 @@ Este é o frontend de um sistema de cardápio digital que permite visualizar e g
 src/
 ├── components/          # Componentes reutilizáveis
 │   └── card/           # Componente de card
-│       ├── card.tsx
-│       ├── card.css
-│       └── create-modal/    # Modal de criação
-│           ├── create-modal.tsx
-│           └── create-modal.css
+│       ├── card.tsx    # Card com botões de ação
+│       ├── card.css    # Estilos do card
+│       ├── create-modal/    # Modal de criação
+│       │   ├── create-modal.tsx
+│       │   └── create-modal.css
+│       ├── edit-modal/      # Modal de edição
+│       │   ├── edit-modal.tsx
+│       │   └── edit-modal.css
+│       └── delete-modal/    # Modal de confirmação de exclusão
+│           ├── delete-modal.tsx
+│           └── delete-modal.css
 ├── hooks/              # Custom hooks
 │   ├── useFoodData.ts         # Hook para buscar dados
-│   └── userFoodDataMutate.ts  # Hook para mutações
+│   ├── userFoodDataMutate.ts  # Hook para criar itens
+│   ├── useFoodUpdate.ts       # Hook para atualizar itens
+│   └── useFoodDelete.ts       # Hook para excluir itens
 ├── interface/          # Definições de tipos TypeScript
-│   └── FoodData.ts
-├── App.tsx            # Componente principal
-├── App.css            # Estilos globais
-└── main.tsx           # Ponto de entrada da aplicação
+│   └── FoodData.ts     # Interface principal dos dados
+├── App.tsx            # Componente principal com gerenciamento de modais
+├── App.css            # Estilos globais e estados (loading, erro, empty)
+└── main.tsx           # Ponto de entrada com QueryClient e Toaster
 ```
 
 ## 🛠️ Instalação e Configuração
@@ -82,7 +95,12 @@ npm install
 Certifique-se de que sua API está rodando em `http://localhost:8080` com os seguintes endpoints:
 
 - `GET /food` - Listar todos os itens do cardápio
+- `GET /food/{id}` - Buscar item específico por ID
 - `POST /food` - Criar novo item do cardápio
+- `PUT /food/{id}` - Atualizar item existente
+- `DELETE /food/{id}` - Excluir item do cardápio
+
+**⚠️ Importante:** Os preços devem ser enviados em **centavos** para a API (ex: R$ 25,50 = 2500)
 
 ### 4. Execute o projeto
 
