@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useFoodMutate } from '../../../hooks/userFoodDataMutate';
+import { useFoodUpdate } from '../../../hooks/useFoodUpdate';
 import type { FoodData } from '../../../interface/FoodData';
-import './create-modal.css';
+import './edit-modal.css';
 import toast from 'react-hot-toast';
 
 interface InputProps {
@@ -11,8 +11,9 @@ interface InputProps {
     type?: string
 }
 
-interface CreateModalProps {
-    closeModal(): void
+interface EditModalProps {
+    closeModal(): void,
+    foodData: FoodData
 }
 
 const Input = ({ label, value, updateValue, type = "text" }: InputProps) => {
@@ -29,12 +30,11 @@ const Input = ({ label, value, updateValue, type = "text" }: InputProps) => {
     );
 }
 
-export function CreateModal({ closeModal }: CreateModalProps) {
-
-    const [title, setTitle] = useState('');
-    const [price, setPrice] = useState(0);
-    const [imageUrl, setImageUrl] = useState('');
-    const { mutate, isPending, isSuccess } = useFoodMutate();
+export function EditModal({ closeModal, foodData }: EditModalProps) {
+    const [title, setTitle] = useState(foodData.title);
+    const [price, setPrice] = useState(foodData.price / 100); // Converter de centavos para reais
+    const [imageUrl, setImageUrl] = useState(foodData.image);
+    const { mutate, isPending, isSuccess } = useFoodUpdate();
     
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -44,18 +44,19 @@ export function CreateModal({ closeModal }: CreateModalProps) {
             return;
         }
         
-        const foodData: FoodData = {
+        const updatedFoodData: FoodData = {
+            id: foodData.id,
             title,
             price: Math.round(Number(price) * 100), // Converter para centavos
             image: imageUrl
         };
         
-        mutate(foodData);
+        mutate(updatedFoodData);
     }
 
     useEffect(() => {
         if (isSuccess) {
-            toast.success('Item criado com sucesso!');
+            toast.success('Item atualizado com sucesso!');
             closeModal();
         }
     }, [isSuccess, closeModal]);
@@ -69,7 +70,7 @@ export function CreateModal({ closeModal }: CreateModalProps) {
                         <line x1="6" y1="6" x2="18" y2="18"></line>
                     </svg>
                 </button>
-                <h2>Criar Novo Item no Cardápio</h2>
+                <h2>Editar Item do Cardápio</h2>
                 <form onSubmit={submit}>
                     <Input label="Título" value={title} updateValue={setTitle} />
                     <Input label="Preço (R$)" value={price} updateValue={setPrice} type="number" />
@@ -79,7 +80,7 @@ export function CreateModal({ closeModal }: CreateModalProps) {
                             Cancelar
                         </button>
                         <button type="submit" className="btn btn-primary" disabled={isPending}>
-                            {isPending ? 'Criando...' : 'Criar'}
+                            {isPending ? 'Atualizando...' : 'Atualizar'}
                         </button>
                     </div>
                 </form>

@@ -1,0 +1,74 @@
+/* Importa estilos base do modal */
+@import '../create-modal/create-modal.css';
+
+.delete-modal-container {
+    background: var(--white-color);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px var(--shadow-color);
+    max-width: 400px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    padding: 2rem;
+    text-align: center;
+}
+
+.delete-icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.delete-icon svg {
+    color: var(--error-color);
+}
+
+.delete-modal-container h2 {
+    color: var(--text-color);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+    text-align: center;
+}
+
+.delete-modal-container p {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.warning {
+    color: var(--error-color);
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+.btn-danger {
+    background: linear-gradient(45deg, var(--error-color), #c0392b);
+    color: var(--white-color);
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+.btn-danger:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+}
+
+.btn-danger:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .delete-modal-container {
+        width: 95%;
+        padding: 1.5rem;
+    }
+    
+    .delete-modal-container h2 {
+        font-size: 1.25rem;
+    }
+}
