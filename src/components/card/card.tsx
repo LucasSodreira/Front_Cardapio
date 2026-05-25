@@ -18,7 +18,7 @@ export function Card({ foodData, onEdit, onDelete }: CardProps) {
             <img src={image} alt={title} />
             <div className="card-content">
                 <h2>{title}</h2>
-                <p><b>Valor:</b> R$ {formattedPrice}</p>
+                <p>R$ {formattedPrice}</p>
                 <div className="card-actions">
                     <button 
                         className="btn-edit" 
